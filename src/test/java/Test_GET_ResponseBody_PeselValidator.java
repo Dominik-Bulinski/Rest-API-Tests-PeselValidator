@@ -186,7 +186,7 @@ public class Test_GET_ResponseBody_PeselValidator {
         Assert.assertEquals(actualBody, expectedBody);
     }
 
-    /**2000-2199*/
+    /**2000-2099*/
     //Valid male pesel 2001-01-31
     @Test
     public void testMaleValidPeselResponseBody2000() {
@@ -259,4 +259,41 @@ public class Test_GET_ResponseBody_PeselValidator {
         Assert.assertEquals(actualBody, expectedBody);
     }
 
+    /**2000-2199*/
+    //Valid male pesel 2100-11-02
+    @Test
+    public void testMaleValidPeselResponseBody2100() {
+        String expectedBody = "{\"pesel\":\"00510286611\",\"isValid\":true,\"dateOfBirth\":\"2100-11-02T00:00:00\",\"gender\":\"Male\",\"errors\":[]}";
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00510286611");
+        String actualBody = response.getBody().asString();
+        Assert.assertEquals(actualBody, expectedBody);
+    }
+
+    //Invalid male pesel 2100-11-02
+    @Test
+    public void testMaleInvalidPeselResponseBody2100() {
+        String expectedBody = "{\"pesel\":\"00511286611\",\"isValid\":false,\"dateOfBirth\":\"2100-11-12T00:00:00\",\"gender\":\"Male\",\"errors\":[{\"errorCode\":\"INVC\",\"errorMessage\":\"Check sum is invalid. Check last digit.\"}]}";
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00511286611");
+        String actualBody = response.getBody().asString();
+        Assert.assertEquals(actualBody, expectedBody);
+    }
+
+    /**2200-2299*/
+    //Valid male pesel 2210-11-02
+    @Test
+    public void testMaleValidPeselResponseBody2200() {
+        String expectedBody = "{\"pesel\":\"10710265213\",\"isValid\":true,\"dateOfBirth\":\"2210-11-02T00:00:00\",\"gender\":\"Male\",\"errors\":[]}";
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=10710265213");
+        String actualBody = response.getBody().asString();
+        Assert.assertEquals(actualBody, expectedBody);
+    }
+
+    //Invalid male pesel 2100-11-02
+    @Test
+    public void testMaleInvalidPeselResponseBody2200() {
+        String expectedBody = "{\"pesel\":\"10710265214\",\"isValid\":false,\"dateOfBirth\":\"2210-11-02T00:00:00\",\"gender\":\"Male\",\"errors\":[{\"errorCode\":\"INVC\",\"errorMessage\":\"Check sum is invalid. Check last digit.\"}]}";
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=10710265214");
+        String actualBody = response.getBody().asString();
+        Assert.assertEquals(actualBody, expectedBody);
+    }
 }
