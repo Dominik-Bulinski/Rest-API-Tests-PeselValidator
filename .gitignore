@@ -1,8 +1,6 @@
 # Ignored files in this project
-.idea/
-target/
-out/
-/shelf/
+
 /.idea/workspace.xml
-/target/
+
 /.idea/
+/target/
