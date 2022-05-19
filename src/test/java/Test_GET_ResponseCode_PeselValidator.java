@@ -11,7 +11,6 @@ public class Test_GET_ResponseCode_PeselValidator {
     public static void validMalePeselGet_ResponseCode(){
         Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=66101587196");
         Assert.assertEquals(response.statusCode(),200,"Status code does not contain 200");
-        System.out.println(response.asString().contains("Male"));
     }
 
     //Sending GET request with a valid pesel (female), expected 200 [OK]
@@ -19,7 +18,6 @@ public class Test_GET_ResponseCode_PeselValidator {
     public static void validFemalePeselGet_ResponseCode(){
         Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=57111221909");
         Assert.assertEquals(response.statusCode(),200,"Status code does not contain 200");
-        System.out.println(response.asString().contains("Female"));
     }
 
     //Sending GET request with invalid pesel (male), expected 200 [OK]
@@ -27,7 +25,6 @@ public class Test_GET_ResponseCode_PeselValidator {
     public static void invalidPeselGet_ResponseCode(){
         Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=661015871W96");
         Assert.assertEquals(response.statusCode(),200,"Status code does not contain 200");
-        System.out.println(response.asString().contains("Male"));
     }
 
     //Sending GET request with missing pesel argument, expected 200 [OK]

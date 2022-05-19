@@ -1,10 +1,36 @@
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.get;
 
 public class Test_GET_ResponseBody_PeselValidator {
+
+    @DataProvider
+    public Object[][] genderCheck() {
+        return new Object[][]{
+                {"01071651206", "Female"},
+                {"01071651216", "Male"},
+                {"01071651226", "Female"},
+                {"01071651236", "Male"},
+                {"01071651246", "Female"},
+                {"01071651256", "Male"},
+                {"01071651266", "Female"},
+                {"01071651276", "Male"},
+                {"01071651286", "Female"},
+                {"01071651296", "Male"}
+        };
+    }
+
+    @Test(dataProvider = "genderCheck")
+    public void checkingGenderTest(String listOfPeselas, String expectedPeselas) {
+        String urlAPI = ("https://peselvalidatorapsitest.azurewebsites.net/api/Pesel?pesel=");
+        Response response=get(urlAPI+=listOfPeselas);
+        String gender = response.path("gender");
+        Assert.assertEquals(gender,expectedPeselas);
+    }
+
 
     /** MALE BODY ELEMENTS */
     //Checking Body Elements if male pesel is correct identify date of birth
