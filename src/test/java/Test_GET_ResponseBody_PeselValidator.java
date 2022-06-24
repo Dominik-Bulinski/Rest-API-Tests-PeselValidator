@@ -26,47 +26,86 @@ public class Test_GET_ResponseBody_PeselValidator {
     @Test(dataProvider = "genderCheck")
     public void checkingGenderTest(String listOfPeselas, String expectedPeselas) {
         String urlAPI = ("https://peselvalidatorapsitest.azurewebsites.net/api/Pesel?pesel=");
-        Response response=get(urlAPI+=listOfPeselas);
+        Response response = get(urlAPI += listOfPeselas);
         String gender = response.path("gender");
-        Assert.assertEquals(gender,expectedPeselas);
+        Assert.assertEquals(gender, expectedPeselas);
     }
 
 
-    /** MALE BODY ELEMENTS */
+    //Invalid day of month Male pesel 1800-01-32 00813241811
+    @Test
+    public static void testCorrectMaleIdentifiedDate() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00813241811");
+        String gender = response.path("dateOfBirth");
+        Assert.assertEquals(gender, "null", "Pesel date is not valid");
+    }
+
+    //Invalid day of month female pesel 1800-01-32 00813258408
+    @Test
+    public static void testIncorrectFemaleIdentifiedDate() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00813258408");
+        String gender = response.path("dateOfBirth");
+        Assert.assertEquals(gender, "null", "Pesel date is not valid");
+    }
+
+    //Invalid day of month Male pesel 1900-01-32 00013136918
+    @Test
+    public static void testIncorrectMaleIdentifiedDate() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013136918");
+        String gender = response.path("dateOfBirth");
+        Assert.assertEquals(gender, "null", "Pesel date is not valid");
+    }
+
+    //Invalid day of month female pesel 1900-01-32 00013211504
+    @Test
+    public static void testIncorrectFemaleIdentifiedDate2() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013211504");
+        String gender = response.path("dateOfBirth");
+        Assert.assertEquals(gender, "null", "Pesel date is not valid");
+    }
+
+
+    /**
+     * MALE BODY ELEMENTS
+     */
     //Checking Body Elements if male pesel is correct identify date of birth
     @Test
-    public static void testMalePeselIsCorrectIdentifiedDate(){
-        Response response=get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013197214");
+    public static void testMalePeselIsCorrectIdentifiedDate() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013197214");
         String gender = response.path("dateOfBirth");
         Assert.assertEquals(gender, "1900-01-31T00:00:00", "Pesel date is not valid");
     }
 
     //Checking Body Elements if male pesel is correct identify gender
     @Test
-    public static void testMalePeselIsCorrectIdentifiedGender(){
-        Response response=get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013197214");
+    public static void testMalePeselIsCorrectIdentifiedGender() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013197214");
         String gender = response.path("gender");
         Assert.assertEquals(gender, "Male", "Pesel gender is not valid");
     }
 
-    /** FEMALE BODY ELEMENTS */
+    /**
+     * FEMALE BODY ELEMENTS
+     */
     //Checking Body Elements if male pesel is correct identify date of birth
     @Test
-    public static void testFemalePeselIsCorrectIdentifiedDate(){
-        Response response=get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013117425");
+    public static void testFemalePeselIsCorrectIdentifiedDate() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013117425");
         String gender = response.path("dateOfBirth");
         Assert.assertEquals(gender, "1900-01-31T00:00:00", "Pesel date is not valid");
     }
 
     //Checking Body Elements if female pesel is correct identify gender
     @Test
-    public static void testFemalePeselIsCorrectIdentified(){
-        Response response=get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013117425");
+    public static void testFemalePeselIsCorrectIdentified() {
+        Response response = get("https://peselvalidatorapitest.azurewebsites.net/api/Pesel?pesel=00013117425");
         String gender = response.path("gender");
         Assert.assertEquals(gender, "Female", "Pesel gender is not valid");
     }
 
-    /**1800-1899*/
+    /**
+     * 1800-1899
+     */
     //Valid male pesel 1850-01-31
     @Test
     public void testMaleValidPeselResponseBody1800() {
@@ -139,7 +178,9 @@ public class Test_GET_ResponseBody_PeselValidator {
         Assert.assertEquals(actualBody, expectedBody);
     }
 
-    /**1900-1999*/
+    /**
+     * 1900-1999
+     */
     //Valid male pesel 1900-01-31
     @Test
     public void testMaleValidPeselResponseBody() {
@@ -212,7 +253,9 @@ public class Test_GET_ResponseBody_PeselValidator {
         Assert.assertEquals(actualBody, expectedBody);
     }
 
-    /**2000-2099*/
+    /**
+     * 2000-2099
+     */
     //Valid male pesel 2001-01-31
     @Test
     public void testMaleValidPeselResponseBody2000() {
@@ -285,7 +328,9 @@ public class Test_GET_ResponseBody_PeselValidator {
         Assert.assertEquals(actualBody, expectedBody);
     }
 
-    /**2000-2199*/
+    /**
+     * 2000-2199
+     */
     //Valid male pesel 2100-11-02
     @Test
     public void testMaleValidPeselResponseBody2100() {
@@ -304,7 +349,9 @@ public class Test_GET_ResponseBody_PeselValidator {
         Assert.assertEquals(actualBody, expectedBody);
     }
 
-    /**2200-2299*/
+    /**
+     * 2200-2299
+     */
     //Valid male pesel 2210-11-02
     @Test
     public void testMaleValidPeselResponseBody2200() {
